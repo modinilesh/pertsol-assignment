@@ -1,5 +1,6 @@
 package com.pertsol.test.assignment.services;
 
+import com.pertsol.test.assignment.dto.ResponseDto;
 import com.pertsol.test.assignment.entities.Comments;
 
 import java.time.LocalDate;
@@ -26,5 +27,8 @@ public interface CommentsService {
 
     //get comments by date
     List<Comments> getCommentsByDate(LocalDate date);
+
+    //get comments by username and date
+    ResponseDto getCommentsByUsernameAndDate(String username, LocalDate date);
 
 }

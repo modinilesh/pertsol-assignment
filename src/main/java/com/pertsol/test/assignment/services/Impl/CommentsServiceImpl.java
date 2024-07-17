@@ -1,9 +1,11 @@
 package com.pertsol.test.assignment.services.Impl;
 
+import com.pertsol.test.assignment.dto.ResponseDto;
 import com.pertsol.test.assignment.entities.Comments;
 import com.pertsol.test.assignment.repository.CommentsRepository;
 import com.pertsol.test.assignment.services.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -16,6 +18,8 @@ public class CommentsServiceImpl implements CommentsService {
 
     @Autowired
     private CommentsRepository commentsRepository;
+
+    private ResponseDto responseDto = new ResponseDto<>();
 
     @Override
     public Comments createComment(Comments comments) {
@@ -54,4 +58,20 @@ public class CommentsServiceImpl implements CommentsService {
         List<Comments> commentsByDate = commentsRepository.findByDate(date);
         return commentsByDate;
     }
+
+    @Override
+    public ResponseDto getCommentsByUsernameAndDate(String username, LocalDate date) {
+        try{
+            List<Comments> commentsByUsernameAndDate = commentsRepository.findByUsernameAndDate(username, date);
+            responseDto.setData(commentsByUsernameAndDate);
+            responseDto.setMessage("Data fetched successfully");
+            responseDto.setStatusCode(HttpStatus.OK);
+        }catch (Exception e){
+            responseDto.setMessage(e.getMessage());
+            responseDto.setStatusCode(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return responseDto;
+    }
+
+
 }

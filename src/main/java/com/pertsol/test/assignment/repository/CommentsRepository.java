@@ -15,4 +15,7 @@ public interface CommentsRepository extends JpaRepository<Comments, Long> {
     //find Comments by date
     List<Comments> findByDate(LocalDate date);
 
+    //find comments by username and date
+    List<Comments> findByUsernameAndDate(String username, LocalDate date);
+
 }

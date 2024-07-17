@@ -1,5 +1,6 @@
 package com.pertsol.test.assignment.controller;
 
+import com.pertsol.test.assignment.dto.ResponseDto;
 import com.pertsol.test.assignment.entities.Comments;
 import com.pertsol.test.assignment.services.CommentsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,14 @@ public class CommentsRestController {
     public ResponseEntity<List<Comments>> getAllCommentsByDate(
             @RequestParam(required = false, value = "date") @DateTimeFormat LocalDate date){
         return new ResponseEntity<>(commentsService.getCommentsByDate(date), HttpStatus.OK);
+    }
+
+    //get comments by username
+    @GetMapping(value = "/search", params = {"username","date"})
+    public ResponseDto getAllCommentsByUsernameAndDate(
+            @RequestParam(required = false, value = "username") String username,
+            @RequestParam(required = false, value = "date") LocalDate date){
+        return commentsService.getCommentsByUsernameAndDate(username, date);
     }
 
 }
